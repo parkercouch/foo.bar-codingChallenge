@@ -1,4 +1,4 @@
-# Google coding challenge 01/14/16
+# Google coding challenge 01/14/16 - Pirate Challenge
 # Parker Couch
 
 def answer(numbers):
