@@ -30,32 +30,71 @@
 # as a string in base-10 representation. If there is no such n, return "None". 
 # S will be a positive integer no greater than 10^25.
 
-#Save some time by keeping track of previous answers in the recursive function
-previous_values = {0:1, 1:1, 2:2}
+def memoize(f):
+	"""Automatically memoizes previous values for our recursive function"""
+	memo = {}
+	def helper(x):
+		if x not in memo:
+			memo[x] = f(x)
+		return memo[x]
+	return helper
 
+@memoize
 def r(x):
 	"""Recursive function which figures out how many zombits"""
-	if not x in previous_values:
+	if x == 0 or x == 1:
+		return 1
+	elif x == 2:
+		return 2
+	else:
 		if x % 2 == 0:
 			n = x/2
-			previous_values[x] = r(n) + r(n+1) + n
+			return r(n) + r(n+1) + n
 		else:
 			n = (x-1) / 2
-			previous_values[x] = r(n-1) + r(n) + 1
-	return previous_values[x]
+			return r(n-1) + r(n) + 1
+
+
+def search(start, end, target, parity):
+    """Binary search by even or odd indices depending on parity"""
+    
+    if end <= start:
+        # Target is not in the list
+        return None
+
+    # set midpoint with a bitshift
+    mid = start + ((end - start) >> 1)
+
+    # Use parity to add 1 to keep the indexes even/odd
+    if parity != (mid & 1):
+    	mid += 1
+
+    # Get the value at the midpoint
+    S = r(mid)
+
+    if S == target:
+    	# Found the target, so return the index it is at
+        return mid
+
+    if S > target:
+        # Must be in the first half so end is set to the current midpoint
+        end = mid - 1
+    else:
+        # Must be in the second half so start is set to the current midpoint
+        start = mid + 1
+
+    # Search the narrowed field
+    return search(start, end, target, parity)
+
 
 def answer(str_S):
 	"""Will return the last time str_S occurs in the list made by r(x)"""
 	value = int(str_S)
-	i = 0
 
-	# Loop until answer if found, or the odd indices have surpassed that number
-	# The even indices output much larger numbers than odd, so if the odd have
-	# surpassed the value then we can be assured that it won't occur again
-	while True:
-		if r(i) == value:
-			return "%d" % i
-		elif i % 2 != 0 and r(i) > value:
-			return "None"
-		else:
-			i += 1
+	#Search odd first, then even if needed
+	odd = search(0, value, value, 1)
+	if odd != None:
+		return '{}'.format(odd)
+	else:
+		# Check even indices
+		return '{}'.format(search(0, value, value, 0))

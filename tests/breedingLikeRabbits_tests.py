@@ -29,6 +29,12 @@ output4 = "4991"
 input5 = "17480"
 output5 = "None"
 
+input6 = "217026840050179138061511387"
+output6 = "10000000000000000000000000"
+
+input7 = "1"
+output7 = "1"
+
 
 def test_answer():
 	result = breedingLikeRabbits.answer(input1)
@@ -41,3 +47,7 @@ def test_answer():
 	assert_equal(result, output4)
 	result = breedingLikeRabbits.answer(input5)
 	assert_equal(result, output5)
+	result = breedingLikeRabbits.answer(input6)
+	assert_equal(result, output6)
+	result = breedingLikeRabbits.answer(input7)
+	assert_equal(result, output7)
