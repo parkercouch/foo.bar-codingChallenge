@@ -42,6 +42,20 @@ class TestLineUpTheCaptives(object):
 		"""Runs after every test"""
 		pass
 
+	def test_checkFromLeftSide(self):
+		lineup = [10,9,8,7,6,5,4,3,2,1]
+		result = lineUpTheCaptives.checkFromLeftSide(lineup)
+		assert_equal(result, 1)
+		lineup = [9,8,7,10,6,5,4,3,2,1]
+		result = lineUpTheCaptives.checkFromLeftSide(lineup)
+		assert_equal(result, 2)
+		lineup = [1,2,3,4,5,6,7,8,9,10]
+		result = lineUpTheCaptives.checkFromLeftSide(lineup)
+		assert_equal(result, 10)
+		lineup = [1,2,5,3,4,6,9,7,8,10]
+		result = lineUpTheCaptives.checkFromLeftSide(lineup)
+		assert_equal(result, 6)
+
 	def test_answer(self):
 		"""lineUpTheCaptives"""
 		result = lineUpTheCaptives.answer(self.x1, self.y1, self.n1)

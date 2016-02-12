@@ -39,5 +39,18 @@
 # large as the total number of rabbits (n).
 # 
 
+def checkFromLeftSide(lineup):
+	"""Counting rabbits that you can see from the left side (x)"""
+	visible = 0
+	max_height = len(lineup)
+	for i, height in enumerate(lineup):
+		if height == max_height:
+			visible += 1
+			return visible
+		elif i == 0:
+			visible += 1 
+		elif height > lineup[i-1]:
+			visible += 1
+
 def answer(x, y, n):
 	pass
